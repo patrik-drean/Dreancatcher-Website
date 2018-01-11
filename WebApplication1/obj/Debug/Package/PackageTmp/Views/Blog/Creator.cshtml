@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "Blog Creator";
+}
+
+<h2 class="col-sm-12 ">Blog Creator</h2>
+<br /><br />
+@using (Html.BeginForm("Creator", "Blog", FormMethod.Post, new { enctype = "multipart/form-data"}))
+{
+      <div class="form-horizontal">
+          <label for="inputDate" class="control-label col-md-1">Date</label>
+          <input name="inputDate" class="form-control" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+          <br />
+
+          <label for="inputTitle" class="control-label col-md-1">Post Title</label>
+          <input name="inputTitle" class="form-control" type="text" required />
+          <br />
+
+          <label for="postedFile" class="control-label col-md-1">Blog Picture</label>
+          <input name="postedFile"  type="file" />
+          <span class="alert-danger">@ViewBag.FileAlreadyExists</span>
+          <br />
+
+          <div class="form-group col-md-12">
+              <label for="inputContent" class="control-label ">Content</label>
+              <br />
+              <textarea name="inputContent" rows="16" cols="500" class="TextAreaForm" required></textarea>
+          </div>
+          <br />
+          <br /><br />
+
+
+          <div class="form-group">
+              <div class="col-md-offset-2 col-md-10">
+                  <input type="submit" value="Create Post" class="btn btn-primary" />
+              </div>
+          </div>
+
+      </div>
+}

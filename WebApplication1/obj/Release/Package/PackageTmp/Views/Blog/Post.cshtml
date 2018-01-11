@@ -1,0 +1,100 @@
+﻿@model Project1.Models.PostComments
+
+@{
+    ViewBag.Title = "Post";
+}
+
+<div style="float:right;">
+    @Html.ActionLink("All " + ViewContext.RouteData.Values["controller"].ToString() + " Posts", "Index", ViewContext.RouteData.Values["controller"].ToString())
+
+
+    @if (ViewContext.RouteData.Values["action"].ToString() != "Index")
+    {
+        @:> <a href="Post?BlogID=@Model.Blog.BlogID">@Model.Blog.Title</a>
+}
+</div>
+
+
+
+<div class="row">
+    <h1 class="col-sm-12 BlogTitle PostTitle">@Model.Blog.Title</h1>
+    <p style="padding-left: 25px;">@Model.Blog.Date.Month/@Model.Blog.Date.Day/@Model.Blog.Date.Year</p>
+</div>
+
+@if (Model.Blog.HeaderImage != null)
+{
+<div class="row">
+    <div class="col-sm-offset-2 col-sm-8 text-center">
+        <img src="~/Content/Images/@Model.Blog.HeaderImage" alt="(See below for post)" class="img-responsive header-img" />
+    </div>
+</div>
+}
+
+<br />
+
+
+
+
+@foreach (var item in Model.Content)
+{
+        <h4 class="content-items">@item.Text <span style="white-space: pre-line"></span></h4>
+        
+}
+
+<br /><br /><br />
+<h4 class="BlogTitle"><strong>Comments</strong></h4>
+<hr />
+
+@foreach (var item in Model.Comment)
+{
+    <div class="row">
+        <div class="col-md-2"> 
+            <h3 class="content-items"><strong>@item.UserName</strong></h3>
+        </div>
+        <div class="col-md-9">
+            <h4 class="content-items">@item.Text</h4>
+        </div>
+    </div>
+    
+        <br />
+}
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    using (Html.BeginForm("Comment", "Blog"))
+    {
+        @Html.AntiForgeryToken()
+
+        <input class="form-control text-box single-line" data-val="true" data-val-required="Please enter your first name" id="UserName" name="UserName" type="hidden" value="1">
+        <input class="form-control text-box single-line" data-val="true" data-val-required="Please enter your first name" id="BlogID" name="BlogID" type="hidden" value="@Model.Blog.BlogID">
+        <input class="form-control text-box single-line" data-val="true" data-val-required="Please enter your first name" id="CommentID" name="CommentID" type="hidden" value="@Model.Blog.BlogID">
+
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input class="col-sm-offset-6 col-sm-8 form-control text-box" id="Text" name="Text" type="text" value="" />
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-10">
+                    <input type="submit" value="Comment" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+
+    }
+}
+else
+{
+    @Html.ActionLink("Login/Sign-In to Comment","Login", "Account", null, new { @class="btn primary-btn"})
+}
+
+
+
+

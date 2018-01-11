@@ -1,0 +1,41 @@
+﻿@model IEnumerable<WebApplication1.Models.BlogDisplay>
+
+<div style="float:right;">
+    @Html.ActionLink("All " + ViewContext.RouteData.Values["controller"].ToString() + " Posts >", "Index", ViewContext.RouteData.Values["controller"].ToString())
+</div>
+
+@{
+    ViewBag.Title = "Blog Posts";
+}
+<div class="row"><br /> </div>
+@foreach (var item in Model)
+{
+<div class="row">
+    <div class="col-md-10">
+        @Html.ActionLink(item.Title, "Post", "Blog", new { BlogID = item.BlogID }, new { @class = "BlogTitle" })
+        <p class="BlogDate">@item.Date.Month/@item.Date.Day/@item.Date.Year</p>
+        <br />
+        <p>@item.Text</p>
+         @Html.ActionLink("Continue Reading", "Post", "Blog", new { BlogID = item.BlogID }, new { @class = "" })
+            <div class="col-md-9"></div>
+        <br />
+        @if (ViewBag.UserName == "Patrik" || ViewBag.UserName == "Lauri")
+        {
+
+            @Html.ActionLink("Edit Post", "Edit", "Blog", new { id = item.BlogID }, new { @class = "header-row" })
+            <span class="" style="margin:0 5px;">|</span>
+            @Html.ActionLink("Delete Post", "Delete", "Blog", new { id = item.BlogID }, new { @class = "header-row" })
+
+        }
+        <hr /><br />    
+
+    </div>
+</div>
+
+
+}
+<br />  <br />
+@if (ViewBag.UserName == "Patrik" || ViewBag.UserName == "Lauri")
+{
+    @Html.ActionLink("Add New Post", "Creator", "Blog", null, new { @class = "btn btn-primary" })
+}
