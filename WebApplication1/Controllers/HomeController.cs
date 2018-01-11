@@ -62,7 +62,7 @@ namespace Project1.Controllers
                              
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("dreantester@gmail.com", "TestAccount");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("dreantester@gmail.com", "XXXXX");
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(mail);
 
